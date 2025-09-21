@@ -1,0 +1,30 @@
+---
+import type { Performance } from "../../types";
+import { loadQuery } from "../sanity/lib/load-query";
+import SanityImage from "../components/SanityImage.astro";
+const { data: performances } = await loadQuery<Performance[]>({
+    query: `*[_type == "Performance"] | order(_createdAt desc){
+     title,
+     image{
+        asset,
+        alt
+     },
+     description,
+     date
+  }`,
+});
+---
+
+<div class="mt-12 max-w-5xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-6 text-center">Performances</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {performances.map((performance) => (
+            <div class="border rounded-lg p-4 shadow hover:shadow-lg transition">
+                {performance.image?.asset && (
+                    <SanityImage node={performance.image} width={400} class="mb-4 rounded" />
+                )}
+                <h3 class="text-xl font-semibold mb-2">{performance.title}</h3>
+                {performance.description && <p>{performance.description}</p>}
+            </div>
+        ))}
+    </div>
