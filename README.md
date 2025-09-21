@@ -2,6 +2,71 @@
 
 Quickly create a modern, content-driven landing page for a small business, artist, or independent contractor—such as a DJ—with this ready-to-use template. Built with Astro, Sanity CMS, React, TailwindCSS, and Vercel, it's designed for fast setup, easy customization, and instant deployment.
 
+
+## 🏢 Sanity Studio & CLI Setup
+
+This project uses [Sanity CMS](https://www.sanity.io/).  
+To create an organization, initialize a project, and deploy your Sanity Studio, use the included npm scripts.
+
+### Common Setup Steps
+
+1. **Login to Sanity:**
+   ```bash
+   npm run sanity:login
+   ```
+2. **Create a new organization (optional):**
+   ```bash
+   npm run sanity:create-org -- --name "<your-org-name>"
+   ```
+3. **Initialize a new project or select an existing one:**
+   ```bash
+   npm run sanity:init
+   ```
+   Follow the prompts to choose your organization and dataset.
+
+4. **Deploy your Sanity Studio:**
+   ```bash
+   npm run sanity:deploy
+   ```
+   This will give you a public Studio URL.
+
+> **Note:**  
+> The Sanity Studio code should be in a `/studio` folder or as a separate app.  
+> See [Sanity CLI docs](https://www.sanity.io/docs/getting-started-with-sanity-cli) for more info.
+
+### Available Sanity CLI Scripts
+
+The following npm scripts wrap common [Sanity CLI](https://www.sanity.io/docs/getting-started-with-sanity-cli) commands for convenience.  
+Run them from your project root using `npm run <script-name>`.
+
+| Script                      | Description                                                      |
+|-----------------------------|------------------------------------------------------------------|
+| `sanity:login`              | Log in to your Sanity account                                   |
+| `sanity:create-org`         | Create a new Sanity organization                                |
+| `sanity:init`               | Initialize a new Sanity project or select an existing one        |
+| `sanity:deploy`             | Deploy your Sanity Studio                                       |
+| `sanity:start`              | Start the local Sanity Studio development server                 |
+| `sanity:dataset-create`     | Create a new dataset                                            |
+| `sanity:dataset-list`       | List all datasets in your project                               |
+| `sanity:dataset-export`     | Export a dataset to a file                                      |
+| `sanity:dataset-import`     | Import a dataset from a file                                    |
+| `sanity:documents-query`    | Query documents in your dataset                                 |
+| `sanity:users-list`         | List users in your project                                      |
+| `sanity:cors-add`           | Add a CORS origin to your project                               |
+| `sanity:cors-list`          | List CORS origins for your project                              |
+| `sanity:hook-create`        | Create a webhook for your project                               |
+
+**Example usage:**
+
+```bash
+npm run sanity:login
+npm run sanity:init
+npm run sanity:deploy
+npm run sanity:dataset-list
+```
+
+Refer to the [Sanity CLI documentation](https://www.sanity.io/docs/cli) for more details on each command.
+
 ## ✨ Features
 
 - **Astro Framework:** Lightning-fast static and dynamic site generation with a modern developer experience.
@@ -104,7 +169,3 @@ Your `.env` file is required for local development and building your site!
 
 This template is designed to be cloned and customized for your own projects.  
 Swap out your Sanity credentials, update your schemas, and start building—no boilerplate required!
-
----
-Ready to launch your next content-driven site?  
-**Fork, clone, and create something awesome!**

@@ -6,7 +6,21 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sanity:login": "sanity login",
+    "sanity:create-org": "sanity organizations create",
+    "sanity:init": "sanity init",
+    "sanity:deploy": "sanity deploy",
+    "sanity:start": "sanity start",
+    "sanity:dataset-create": "sanity dataset create",
+    "sanity:dataset-list": "sanity dataset list",
+    "sanity:dataset-export": "sanity dataset export",
+    "sanity:dataset-import": "sanity dataset import",
+    "sanity:documents-query": "sanity documents query",
+    "sanity:users-list": "sanity users list",
+    "sanity:cors-add": "sanity cors add",
+    "sanity:cors-list": "sanity cors list",
+    "sanity:hook-create": "sanity hook create"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.1",
