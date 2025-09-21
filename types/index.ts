@@ -1,0 +1,1 @@
+export type { SanityPost } from "./post";
