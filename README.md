@@ -1,6 +1,6 @@
-# Astro + Sanity-CMS Starter Kit
+# Astro + Sanity-CMS Landing Page Starter
 
-Kickstart your next project with this ready-to-use template, combining the best of Astro, Sanity CMS, React, TailwindCSS, and Vercel! Clone, customize, and launch your own modern, content-driven site in minutes.
+Quickly create a modern, content-driven landing page for a small business, artist, or independent contractor—such as a DJ—with this ready-to-use template. Built with Astro, Sanity CMS, React, TailwindCSS, and Vercel, it's designed for fast setup, easy customization, and instant deployment.
 
 ## ✨ Features
 
@@ -25,7 +25,9 @@ Inside of your Astro project, you'll see the following folders and files:
 │   ├── assets/
 │   │   └── astro.svg
 │   ├── components/
-│   │   ├── Welcome.astro
+│   │   ├── Landing.astro
+│   │   ├── Performances.astro
+│   │   ├── Testimonials.astro
 │   │   ├── InternalLink.astro
 │   │   ├── PortableText.astro
 │   │   └── SanityImage.astro
@@ -43,10 +45,18 @@ Inside of your Astro project, you'll see the following folders and files:
 │           ├── author.ts
 │           ├── blockContent.ts
 │           ├── category.ts
-│           ├── post.ts
+│           ├── features.ts
+│           ├── feedback.ts
+│           ├── footer.ts
 │           ├── index.ts
+│           ├── landing.ts
+│           ├── performance.ts
+│           └── post.ts
 ├── types/
+│   ├── feedback.ts
 │   ├── index.ts
+│   ├── landing.ts
+│   ├── performance.ts
 │   └── post.ts
 ├── .env.example
 ├── astro.config.mjs
