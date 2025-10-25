@@ -1,7 +1,10 @@
 # Astro + Sanity-CMS Landing Page Starter
 
-Quickly create a modern, content-driven landing page for a small business, artist, or independent contractor—such as a DJ—with this ready-to-use template. Built with Astro, Sanity CMS, React, TailwindCSS, and Vercel, it's designed for fast setup, easy customization, and instant deployment.
+Quickly create a modern, content-driven landing page for a small business, artist, or independent contractor—such as a DJ—with this ready-to-use template. Built with Astro, Sanity CMS, React, TailwindCSS, and Vercel, it's designed for fast setup, easy customization, and instant deployment. 
 
+## Language Support
+This template is configured for single-language use.  
+If you need multilingual support, check out my other template repository: [astro-sanity-i18n](https://github.com/SananMaarouf/astro-sanity-i18n).
 
 ## 🏢 Sanity Studio & CLI Setup
 
