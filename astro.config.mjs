@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
-import vercel from "@astrojs/vercel";
 import { loadEnv } from 'vite';
 
 // Load .env variables manually
@@ -26,13 +25,5 @@ export default defineConfig({
       studioBasePath: "/studio"
     }),
     react()
-  ],
-
-  adapter: vercel({
-    isr: {
-      exclude: ["/studio/*"],
-    },
-    excludeFiles: ["/studio/**", "/**/*.test.*", "/**/*.spec.*"],
-    maxDuration: 20,
-  })
+  ]
 });
