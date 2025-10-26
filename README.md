@@ -96,11 +96,8 @@ Inside of your Astro project, you'll see the following folders and files:
 │   └── favicon.svg
 ├── src/
 │   ├── assets/
-│   │   └── astro.svg
 │   ├── components/
 │   │   ├── Landing.astro
-│   │   ├── Performances.astro
-│   │   ├── Testimonials.astro
 │   │   ├── InternalLink.astro
 │   │   ├── PortableText.astro
 │   │   └── SanityImage.astro
@@ -118,24 +115,23 @@ Inside of your Astro project, you'll see the following folders and files:
 │           ├── author.ts
 │           ├── blockContent.ts
 │           ├── category.ts
-│           ├── features.ts
-│           ├── feedback.ts
 │           ├── footer.ts
 │           ├── index.ts
 │           ├── landing.ts
-│           ├── performance.ts
 │           └── post.ts
 ├── types/
-│   ├── feedback.ts
 │   ├── index.ts
 │   ├── landing.ts
-│   ├── performance.ts
 │   └── post.ts
 ├── .env.example
+├── environment.ts
 ├── astro.config.mjs
 ├── sanity.config.ts
+├── sanity.cli.ts
 ├── tsconfig.json
+├── package-lock.json
 └── package.json
+
 ```
 
 To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
