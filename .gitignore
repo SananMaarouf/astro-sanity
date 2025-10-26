@@ -32,3 +32,5 @@ pnpm-debug.log*
 
 # vercel
 .vercel/
+.sanity/runtime/app.js
+.sanity/runtime/index.html

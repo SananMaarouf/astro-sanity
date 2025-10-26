@@ -12,12 +12,13 @@ const { data: landing } = await loadQuery<Landing>({
 	 },
 	 youtubeUrl,
 	 video{
-		asset
+		asset{}
 	 },
 	 ctaText,
 	 ctaBtnText
   }`,
 });
+console.log(landing.video);
 ---
 
 <div class="mt-8 max-w-3xl mx-auto text-center">
@@ -31,7 +32,6 @@ const { data: landing } = await loadQuery<Landing>({
 					height="315"
 					src={`https://www.youtube.com/embed/${landing.youtubeUrl}`}
 					title="YouTube video"
-					frameborder="0"
 					allowfullscreen
 					class="mx-auto"
 				/>
