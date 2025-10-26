@@ -2,6 +2,7 @@
 import { loadQuery } from "../sanity/lib/load-query";
 import type { Landing } from "../../types/landing";
 import SanityImage from "../components/SanityImage.astro";
+import { urlForImage } from "../sanity/lib/url-for-image";
 
 const { data: landing } = await loadQuery<Landing>({
 	query: `*[_type == "Landing"] | order(_createdAt desc)[0]{
@@ -12,13 +13,17 @@ const { data: landing } = await loadQuery<Landing>({
 	 },
 	 youtubeUrl,
 	 video{
-		asset{}
+		asset->{
+			url
+		}
 	 },
 	 ctaText,
 	 ctaBtnText
   }`,
 });
-console.log(landing.video);
+
+const posterUrl = landing.image?.asset ? urlForImage(landing.image.asset).url() : "";
+
 ---
 
 <div class="mt-8 max-w-3xl mx-auto text-center">
@@ -40,7 +45,7 @@ console.log(landing.video);
 	}
 	{
 		landing.video?.asset && (
-			<video controls width="600" class="mx-auto mb-6">
+			<video controls width="600" class="mx-auto mb-6" poster={posterUrl} autoplay muted loop>
 				<source src={landing.video.asset.url} type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
