@@ -5,13 +5,19 @@ const pageTitle = import.meta.env.PUBLIC_PAGE_TITLE;
 ---
 <!doctype html>
 
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		<script is:inline>
+			// Initialize theme before page loads to prevent flash
+			const theme = localStorage.getItem('theme') || 
+				(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			document.documentElement.classList.toggle('dark', theme === 'dark');
+		</script>
 	</head>
 	<body>
 		<Navbar client:load />
