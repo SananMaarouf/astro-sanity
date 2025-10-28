@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import Navbar from '../components/Navbar.astro';
+import { Navbar } from '@/components/react/navbar';
 const pageTitle = import.meta.env.PUBLIC_PAGE_TITLE;
 ---
 <!doctype html>
@@ -14,7 +14,7 @@ const pageTitle = import.meta.env.PUBLIC_PAGE_TITLE;
 		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<Navbar />
+		<Navbar client:load />
 		<slot />
 	</body>
 </html>
