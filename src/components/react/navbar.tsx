@@ -56,7 +56,7 @@ const Navbar = ({
   },
   menu = [
     {
-      title: "Products",
+      title: "Dropdown menu",
       url: "#",
       items: [
         {
@@ -87,11 +87,11 @@ const Navbar = ({
     },
   ],
   linkBtn = {
-    signup: { title: "Posts", url: "#" },
+    signup: { title: "Posts", url: "/posts" },
   },
 }: NavbarProps) => {
   return (
-    <section className="py-4">
+    <section className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b pt-4 pb-4">
       <div className="container">
         {/* Desktop Menu */}
         <nav className="hidden justify-between gap-3 lg:flex">
@@ -108,7 +108,7 @@ const Navbar = ({
               </span>
             </a>
             <div className="flex ml-auto items-center">
-              <NavigationMenu className="[&_div.absolute]:-left-[15rem] [&_div.absolute]:top-10">
+              <NavigationMenu className="[&_div.absolute]:-left-[2rem] [&_div.absolute]:top-10">
                 <NavigationMenuList>
                   {menu.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
