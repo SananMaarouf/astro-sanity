@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { Navbar } from '@/components/react/navbar';
 const pageTitle = import.meta.env.PUBLIC_PAGE_TITLE;
+const navbarTitle = import.meta.env.PUBLIC_NAVBAR_TITLE;
 ---
 <!doctype html>
 
@@ -20,7 +21,7 @@ const pageTitle = import.meta.env.PUBLIC_PAGE_TITLE;
 		</script>
 	</head>
 	<body>
-		<Navbar client:load />
+		<Navbar client:load logo={{ url: "/", src: "/astro.svg", alt: "logo", title: navbarTitle }} />
 		<slot />
 	</body>
 </html>
