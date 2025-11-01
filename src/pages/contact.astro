@@ -3,6 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { actions } from 'astro:actions';
 
+/* dynamically generate the contact page */
+export const prerender = false; 
+
 const result = Astro.getActionResult(actions.contact);
 
 // Redirect to clean URL after successful form submission

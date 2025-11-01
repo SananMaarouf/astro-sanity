@@ -40,7 +40,11 @@ interface NavbarProps {
   };
   menu?: MenuItem[];
   linkBtn?: {
-    signup: {
+    posts: {
+      title: string;
+      url: string;
+    };
+    contact: {
       title: string;
       url: string;
     };
@@ -87,7 +91,8 @@ const Navbar = ({
     },
   ],
   linkBtn = {
-    signup: { title: "Posts", url: "/posts" },
+    posts: { title: "Posts", url: "/posts" },
+    contact: { title: "Contact", url: "/contact" },
   },
 }: NavbarProps) => {
   return (
@@ -117,8 +122,11 @@ const Navbar = ({
           </div>
           <div className="flex gap-2 items-center">
             <ThemeSwitcher />
+            <Button asChild size="sm" variant="ghost">
+              <a href={linkBtn.posts.url}>{linkBtn.posts.title}</a>
+            </Button>
             <Button asChild size="sm">
-              <a href={linkBtn.signup.url}>{linkBtn.signup.title}</a>
+              <a href={linkBtn.contact.url}>{linkBtn.contact.title}</a>
             </Button>
           </div>
         </nav>
@@ -165,8 +173,11 @@ const Navbar = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
+                    <Button asChild variant="ghost">
+                      <a href={linkBtn.posts.url}>{linkBtn.posts.title}</a>
+                    </Button>
                     <Button asChild>
-                      <a href={linkBtn.signup.url}>{linkBtn.signup.title}</a>
+                      <a href={linkBtn.contact.url}>{linkBtn.contact.title}</a>
                     </Button>
                     <ThemeSwitcherMobile />
                   </div>
