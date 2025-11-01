@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
+import node from '@astrojs/node';
 import { loadEnv } from 'vite';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -14,6 +15,10 @@ const dataset = env.PUBLIC_SANITY_DATASET;
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static',
+  adapter: node({
+    mode: 'standalone'
+  }),
   vite: {
     plugins: [tailwindcss()]
   },
