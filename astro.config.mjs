@@ -15,7 +15,7 @@ const dataset = env.PUBLIC_SANITY_DATASET;
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: 'server',
   adapter: node({
     mode: 'standalone'
   }),

@@ -1,0 +1,119 @@
+---
+import { actions, isInputError } from 'astro:actions';
+import { Button } from './ui/button';
+
+const result = Astro.getActionResult(actions.contact);
+const isSuccess = result && !result.error;
+const validationError = result?.error && isInputError(result.error) ? result.error : null;
+---
+
+<form method="POST" action={actions.contact} class="space-y-6">
+  <!-- General Error Message -->
+  {result?.error && !validationError && (
+    <div class="rounded-md p-4 bg-destructive/15 text-destructive" role="alert">
+      <p class="font-medium">Error</p>
+      <p class="text-sm">{result.error.message || 'An error occurred. Please try again.'}</p>
+    </div>
+  )}
+  
+  <!-- Success Message -->
+  {isSuccess && result.data && (
+    <div class="rounded-md p-4 bg-green-500/15 text-green-700 dark:text-green-400" role="status">
+      <p class="font-medium">Success!</p>
+      <p class="text-sm">{result.data.message}</p>
+    </div>
+  )}
+
+  <!-- Validation Errors Summary -->
+  {validationError && (
+    <div class="rounded-md p-4 bg-destructive/15 text-destructive" role="alert">
+      <p class="font-medium">Please fix the following errors:</p>
+      <ul class="text-sm mt-2 list-disc list-inside">
+        {validationError.fields.name && <li>{validationError.fields.name[0]}</li>}
+        {validationError.fields.email && <li>{validationError.fields.email[0]}</li>}
+        {validationError.fields.message && <li>{validationError.fields.message[0]}</li>}
+      </ul>
+    </div>
+  )}
+
+  <div class="space-y-2">
+    <label for="name" class="text-sm font-medium leading-none">
+      Name <span class="text-destructive">*</span>
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      minlength="2"
+      aria-required="true"
+      aria-invalid={validationError?.fields.name ? 'true' : 'false'}
+      aria-describedby={validationError?.fields.name ? 'name-error' : undefined}
+      class:list={[
+        "flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        validationError?.fields.name ? "border-destructive" : "border-input"
+      ]}
+      placeholder="John Doe"
+    />
+    {validationError?.fields.name && (
+      <span id="name-error" class="text-sm text-destructive" role="alert">
+        {validationError.fields.name[0]}
+      </span>
+    )}
+  </div>
+
+  <div class="space-y-2">
+    <label for="email" class="text-sm font-medium leading-none">
+      Email <span class="text-destructive">*</span>
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      aria-required="true"
+      aria-invalid={validationError?.fields.email ? 'true' : 'false'}
+      aria-describedby={validationError?.fields.email ? 'email-error' : undefined}
+      class:list={[
+        "flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        validationError?.fields.email ? "border-destructive" : "border-input"
+      ]}
+      placeholder="john@example.com"
+    />
+    {validationError?.fields.email && (
+      <span id="email-error" class="text-sm text-destructive" role="alert">
+        {validationError.fields.email[0]}
+      </span>
+    )}
+  </div>
+
+  <div class="space-y-2">
+    <label for="message" class="text-sm font-medium leading-none">
+      Message <span class="text-destructive">*</span>
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      minlength="10"
+      rows="5"
+      aria-required="true"
+      aria-invalid={validationError?.fields.message ? 'true' : 'false'}
+      aria-describedby={validationError?.fields.message ? 'message-error' : undefined}
+      class:list={[
+        "flex min-h-[80px] w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        validationError?.fields.message ? "border-destructive" : "border-input"
+      ]}
+      placeholder="Your message here..."
+    />
+    {validationError?.fields.message && (
+      <span id="message-error" class="text-sm text-destructive" role="alert">
+        {validationError.fields.message[0]}
+      </span>
+    )}
+  </div>
+
+  <Button type="submit" className="w-full">
+    Send Message
+  </Button>
+</form>
