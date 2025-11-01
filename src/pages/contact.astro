@@ -1,6 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
+import { actions } from 'astro:actions';
+
+const result = Astro.getActionResult(actions.contact);
+
+// Redirect to clean URL after successful form submission
+if (Astro.request.method === 'POST' && result) {
+  return Astro.redirect('/contact?success=true');
+}
+
+// Check if we were redirected after success
+const successParam = Astro.url.searchParams.get('success');
+const showSuccess = successParam === 'true';
 ---
 
 <Layout>
@@ -12,6 +24,13 @@ import ContactForm from '../components/ContactForm.astro';
           Have a question or want to work together? Send us a message and we'll get back to you as soon as possible.
         </p>
       </div>
+
+      {showSuccess && (
+        <div class="rounded-md p-4 bg-green-500/15 text-green-700 dark:text-green-400" role="status">
+          <p class="font-medium">Success!</p>
+          <p class="text-sm">Thank you for your message! We will get back to you soon.</p>
+        </div>
+      )}
 
       <div class="rounded-lg border bg-card p-8 shadow-sm">
         <ContactForm />
