@@ -1,43 +1,37 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
-import node from '@astrojs/node';
-import { loadEnv } from 'vite';
+import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
-// Load .env variables manually
-const env = loadEnv('', process.cwd(), '');
+const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, PUBLIC_SITE_URL } = loadEnv(
+  process.env.NODE_ENV ?? '',
+  process.cwd(),
+  ''
+);
 
-const projectId = env.PUBLIC_SANITY_PROJECT_ID;
-const dataset = env.PUBLIC_SANITY_DATASET;
-
-// https://astro.build/config
 export default defineConfig({
-  adapter: node({
-    mode: 'standalone'
-  }),
+  site: PUBLIC_SITE_URL || 'http://localhost:4321',
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ['ViteDevServerStopped']
-    }
   },
+  output: 'static',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'nb'],
-    fallback: {
-      nb: 'en'
-    }
+    routing: {
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false,
+    },
   },
   integrations: [
     sanity({
-      projectId,
-      dataset,
+      projectId: PUBLIC_SANITY_PROJECT_ID,
+      dataset: PUBLIC_SANITY_DATASET,
       useCdn: false,
-      apiVersion: "2025-09-21",
-      studioBasePath: "/studio"
+      apiVersion: '2025-09-21',
+      studioBasePath: '/studio',
     }),
-    react()
-  ]
+    react(),
+  ],
 });
