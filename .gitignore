@@ -3,6 +3,12 @@ dist/
 
 # generated types
 .astro/
+schema.json
+types/
+
+# scaffolded sanity studio (we use this repo's studio at /studio)
+sanity/
+.sanity/
 
 # dependencies
 node_modules/
@@ -32,5 +38,3 @@ pnpm-debug.log*
 
 # vercel
 .vercel/
-.sanity/runtime/app.js
-.sanity/runtime/index.html
