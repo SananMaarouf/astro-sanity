@@ -1,21 +1,23 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { schema } from "./src/sanity/schemaTypes";
-import {internationalizedArray} from 'sanity-plugin-internationalized-array'
+import { internationalizedArray } from "sanity-plugin-internationalized-array";
+import { structure } from "./src/sanity/structure";
+
 
 export default defineConfig({
-  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID!,
-  dataset: import.meta.env.PUBLIC_SANITY_DATASET!,
+  projectId: "st4o1d3z",
+  dataset: "production",
   plugins: [
-    structureTool(),
+    structureTool({ structure }),
     internationalizedArray({
       languages: [
-        {id: 'en', title: 'English'},
-        {id: 'nb', title: 'Norwegian Bokmål'}
+        { id: "en", title: "English" },
+        { id: "nb", title: "Norwegian Bokmål" },
       ],
-      defaultLanguages: ['en'],
-      fieldTypes: ['string', 'text', 'blockContent'],
-    })
+      defaultLanguages: ["en"],
+      fieldTypes: ["string", "text", "blockContent"],
+    }),
   ],
   schema,
 });
