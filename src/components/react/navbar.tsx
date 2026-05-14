@@ -1,4 +1,4 @@
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Menu } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -23,16 +23,15 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeSwitcher, ThemeSwitcherMobile } from "./theme-switcher";
 
-interface MenuItem {
+export interface MenuItem {
   title: string;
   url: string;
   description?: string;
-  icon?: React.ReactNode;
   items?: MenuItem[];
 }
 
 interface NavbarProps {
-  logo?: {
+  logo: {
     url: string;
     src: string;
     alt: string;
@@ -40,63 +39,18 @@ interface NavbarProps {
   };
   menu?: MenuItem[];
   linkBtn?: {
-    signup: {
-      title: string;
-      url: string;
-    };
+    title: string;
+    url: string;
   };
 }
 
-const Navbar = ({
-  logo = {
-    url: "/",
-    src: "/astro.svg",
-    alt: "logo",
-    title: "Acme Corp",
-  },
-  menu = [
-    {
-      title: "Dropdown menu",
-      url: "#",
-      items: [
-        {
-          title: "Link 1",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Link 2",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Link 3",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Link 4",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
-    },
-  ],
-  linkBtn = {
-    signup: { title: "Posts", url: "/posts" },
-  },
-}: NavbarProps) => {
+const Navbar = ({ logo, menu = [], linkBtn }: NavbarProps) => {
   return (
     <section className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b pt-4 pb-4">
       <div className="container">
         {/* Desktop Menu */}
         <nav className="hidden justify-between gap-3 lg:flex">
           <div className="flex items-center w-full">
-            {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
               <img
                 src={logo.src}
@@ -107,26 +61,29 @@ const Navbar = ({
                 {logo.title}
               </span>
             </a>
-            <div className="flex ml-auto items-center">
-              <NavigationMenu className="[&_div.absolute]:-left-8 [&_div.absolute]:top-10">
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+            {menu.length > 0 && (
+              <div className="flex ml-auto items-center">
+                <NavigationMenu className="[&_div.absolute]:-left-8 [&_div.absolute]:top-10">
+                  <NavigationMenuList>
+                    {menu.map((item) => renderMenuItem(item))}
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+            )}
           </div>
           <div className="flex gap-2 items-center">
             <ThemeSwitcher />
-            <Button asChild size="sm">
-              <a href={linkBtn.signup.url}>{linkBtn.signup.title}</a>
-            </Button>
+            {linkBtn && (
+              <Button asChild size="sm">
+                <a href={linkBtn.url}>{linkBtn.title}</a>
+              </Button>
+            )}
           </div>
         </nav>
 
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
               <img
                 src={logo.src}
@@ -156,18 +113,22 @@ const Navbar = ({
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full wrap-break-word flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
+                  {menu.length > 0 && (
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="flex w-full wrap-break-word flex-col gap-4"
+                    >
+                      {menu.map((item) => renderMobileMenuItem(item))}
+                    </Accordion>
+                  )}
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild>
-                      <a href={linkBtn.signup.url}>{linkBtn.signup.title}</a>
-                    </Button>
+                    {linkBtn && (
+                      <Button asChild>
+                        <a href={linkBtn.url}>{linkBtn.title}</a>
+                      </Button>
+                    )}
                     <ThemeSwitcherMobile />
                   </div>
                 </div>
@@ -234,12 +195,11 @@ const renderMobileMenuItem = (item: MenuItem) => {
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
     <a
-      className="hover:bg-muted hover:text-accent-foreground flex min-w-70 
-      select-none flex-row gap-4 rounded-md p-3 leading-none 
+      className="hover:bg-muted hover:text-accent-foreground flex min-w-70
+      select-none flex-row gap-4 rounded-md p-3 leading-none
       no-underline outline-none transition-colors"
       href={item.url}
     >
-      <div className="text-foreground">{item.icon}</div>
       <div>
         <div className="text-sm font-semibold">{item.title}</div>
         {item.description && (
