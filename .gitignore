@@ -7,7 +7,6 @@ schema.json
 types/
 
 # scaffolded sanity studio (we use this repo's studio at /studio)
-sanity/
 .sanity/
 
 # dependencies
