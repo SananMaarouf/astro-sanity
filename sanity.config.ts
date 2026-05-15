@@ -6,8 +6,8 @@ import { structure } from "./src/sanity/structure";
 
 
 export default defineConfig({
-  projectId: "st4o1d3z",
-  dataset: "production",
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
+  dataset: process.env.SANITY_STUDIO_DATASET!,
   plugins: [
     structureTool({ structure }),
     internationalizedArray({
