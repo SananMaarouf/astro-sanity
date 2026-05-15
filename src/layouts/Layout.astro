@@ -6,11 +6,7 @@ import SEO from "@/components/SEO.astro";
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 import { loadQuery } from "@/sanity/lib/load-query";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
-import {
-  resolveLocale,
-  localizedPath,
-  type Locale,
-} from "@/sanity/lib/locale";
+import { resolveLocale, localizedPath, type Locale } from "@/sanity/lib/locale";
 
 interface Props {
   locale?: Locale | string;
@@ -52,6 +48,7 @@ const menu: MenuItem[] = (settings?.primaryNav?.items ?? [])
   })
   .filter(Boolean) as MenuItem[];
 ---
+
 <!doctype html>
 <html lang={locale}>
   <head>
@@ -67,9 +64,12 @@ const menu: MenuItem[] = (settings?.primaryNav?.items ?? [])
       path={path}
     />
     <script is:inline>
-      const theme = localStorage.getItem('theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.classList.toggle('dark', theme === 'dark');
+      const theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.classList.toggle("dark", theme === "dark");
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
@@ -83,10 +83,9 @@ const menu: MenuItem[] = (settings?.primaryNav?.items ?? [])
       }}
       menu={menu}
       linkBtn={{ title: "Posts", url: localizedPath(locale, "/posts") }}
-    />
-    <div class="container mx-auto px-4 py-2 flex justify-end">
+    >
       <LanguageSwitcher />
-    </div>
+    </Navbar>
     <main class="flex-1">
       <slot />
     </main>

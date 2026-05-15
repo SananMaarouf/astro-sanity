@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Menu } from "lucide-react";
 import {
   Accordion,
@@ -42,9 +43,10 @@ interface NavbarProps {
     title: string;
     url: string;
   };
+  children?: ReactNode;
 }
 
-const Navbar = ({ logo, menu = [], linkBtn }: NavbarProps) => {
+const Navbar = ({ logo, menu = [], linkBtn, children }: NavbarProps) => {
   return (
     <section className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b pt-4 pb-4">
       <div className="container">
@@ -72,6 +74,7 @@ const Navbar = ({ logo, menu = [], linkBtn }: NavbarProps) => {
             )}
           </div>
           <div className="flex gap-2 items-center">
+            {children && <div className="flex items-center">{children}</div>}
             <ThemeSwitcher />
             {linkBtn && (
               <Button asChild size="sm">
@@ -129,6 +132,7 @@ const Navbar = ({ logo, menu = [], linkBtn }: NavbarProps) => {
                         <a href={linkBtn.url}>{linkBtn.title}</a>
                       </Button>
                     )}
+                    {children && <div className="flex items-center">{children}</div>}
                     <ThemeSwitcherMobile />
                   </div>
                 </div>
