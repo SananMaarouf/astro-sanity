@@ -1,7 +1,8 @@
 import { defineField, defineType } from "sanity";
 
-export const categoryType = defineType({
-  name: "category",
+export const pageType = defineType({
+  name: "page",
+  title: "Page",
   type: "document",
   fields: [
     defineField({
@@ -22,16 +23,30 @@ export const categoryType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "description",
+      name: "body",
+      type: "internationalizedArrayBlockContent",
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO description",
       type: "internationalizedArrayText",
+    }),
+    defineField({
+      name: "ogImage",
+      title: "OG image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        { name: "alt", type: "string", title: "Alternative Text" },
+      ],
     }),
   ],
   preview: {
-    select: { titles: "title" },
-    prepare({ titles }) {
+    select: { titles: "title", media: "ogImage" },
+    prepare({ titles, media }) {
       const title =
         Array.isArray(titles) && titles.length > 0 ? titles[0].value : "Untitled";
-      return { title };
+      return { title, media };
     },
   },
 });
