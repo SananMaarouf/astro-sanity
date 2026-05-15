@@ -1,82 +1,157 @@
-# Astro + Sanity-CMS + i18n Starter
-### A minimal template to quickly create a multi-language static website using Astro and Sanity CMS.
+# Astro × Sanity × i18n Starter
 
-### Features
+A clone-and-go template for building multi-language static sites with [Astro 6](https://astro.build/), [Sanity 5](https://www.sanity.io/), and TypeScript.
 
-- **Astro Framework:** Lightning-fast static and dynamic site generation with a modern developer experience.
-- **Sanity CMS Integration:** Flexible, real-time content management with powerful schema definitions—edit content without redeploying.
-- **React Support:** Use React components seamlessly alongside Astro and other frameworks.
+## What you get
 
-# Setup
-#### To get started, you need to:
-### 1. Create your own `.env` file in the project root, using `.env.example` as a reference:
+- **Astro 6 static output** with the Sanity Studio mounted at `/studio`.
+- **i18n** wired end-to-end (`en` default, `nb` second locale) using
+  [`sanity-plugin-internationalized-array`](https://github.com/sanity-io/sanity-plugin-internationalized-array)
+  and Astro's built-in `i18n` config.
+- **Locale-aware GROQ** with a single source of truth in
+  [src/sanity/lib/queries.ts](src/sanity/lib/queries.ts) — every query takes a
+  `$locale` parameter and only emits paths for translations that actually exist.
+- **CMS-driven shell**: site title, navigation, footer, and SEO defaults live
+  in Sanity (singletons). The Astro layout reads them per-request.
+- **Sanity TypeGen** pipeline — generated types replace hand-rolled drift.
+- **shadcn UI** primitives + Tailwind CSS 4 + dark mode.
+- **Schemas included**: `siteSettings`, `navigation`, `footer`, `landing`,
+  `page`, `post`, `category`, `author`, plus a `blockContent` array type.
+- **Routes included**: localized `/`, `/posts`, `/post/[slug]`,
+  `/category/[slug]`, `/author/[slug]`, and `[locale]/[page]` for arbitrary
+  CMS pages.
 
+## Quickstart
+
+```bash
+git clone <this-repo> my-site
+cd my-site
+npm install
+```
+
+1. **Log in to Sanity and create a project**
+   ```bash
+   npm run sanity:login
+   npm run sanity:create-project -- --display-name "My Site"
+   ```
+   Copy the printed project ID.
+
+2. **Configure environment variables**
    ```bash
    cp .env.example .env
    ```
-   > The content in .env are now placeholders and will be overwritten with the actual project id and dataset later when you run "npm run sanity:init" later
+   Paste the project ID into `PUBLIC_SANITY_PROJECT_ID`. Keep
+   `PUBLIC_SANITY_DATASET=production` (or change it to match your dataset).
 
-
-### 2. Log in to Sanity use the CLI to initialize a project and deploy your Sanity Studio to the web
-
-
-1. **Login to Sanity:**
+3. **Boot the Studio once to deploy the schema**
    ```bash
-   npm run sanity:login
+   npm run sanity:dev
    ```
-2. **Create a new organization (if you don't have one):**
+   This deploys the schema definitions in `src/sanity/schemaTypes/` to your
+   Sanity dataset. Stop it with `Ctrl-C` once the Studio loads.
+
+4. **Allow the Astro dev server through CORS**
    ```bash
-   npm run sanity:create-org -- --name "<your-org-name>"
+   npm run sanity:cors-add -- http://localhost:4321 --credentials
    ```
-3. **Initialize a new project or select an existing one:**
+
+5. **Generate types and start developing**
    ```bash
-   npm run sanity:init
+   npm run sanity:codegen
+   npm run dev
    ```
-   Follow the prompts to choose your organization and dataset.
+   Open <http://localhost:4321> for the site and <http://localhost:4321/studio>
+   for the embedded Studio.
 
-4. **Deploy your Sanity Studio:**
-   ```bash
-   npm run sanity:deploy
-   ```
-   >   This will give you a public Studio URL. You can update documents there after the project is deployed. But when developing locally to the "/studio" route. 
-   >
-   See [Sanity CLI docs](https://www.sanity.io/docs/getting-started-with-sanity-cli) for more info.
+## First content to author
 
+Open `/studio` and create — at minimum — these documents so the layout has
+something to render:
 
+- One **Site Settings** (singleton) — fill `title` for both locales.
+- One **Navigation** document — and reference it from `Site Settings → Primary Navigation`.
+- One **Footer** (singleton) — `address` and `copyright` per locale, plus
+  email/phone/instagram if you have them.
+- One **Landing** (singleton) — at minimum `title` and `ctaBtnText` per locale.
 
-## Language support
+Posts/categories/authors are optional but recommended so you can verify the
+i18n filter (only locales with translations get a page).
 
-It is configured for Norwegian (nb) and English(en), with English as the default language.
+## Project structure
 
-If you want to change from Norwegian to another locale, update the following files and folders to use your locale code (for example, "fr" or "es"):
+```
+src/
+├── components/        # Astro + React UI (Footer, SEO, PostCard, LanguageSwitcher, Navbar, …)
+├── layouts/Layout.astro
+├── pages/
+│   ├── index.astro            # default-locale (en) landing
+│   ├── posts.astro            # default-locale post list
+│   ├── post/[slug].astro      # default-locale post
+│   ├── category/[slug].astro
+│   ├── author/[slug].astro
+│   └── [locale]/              # mirrored routes for non-default locales
+├── sanity/
+│   ├── schemaTypes/           # all schema definitions
+│   ├── structure.ts           # studio sidebar (singletons + lists)
+│   ├── lib/queries.ts         # central typed GROQ
+│   ├── lib/load-query.ts      # thin sanity client wrapper
+│   ├── lib/locale.ts          # LOCALES, DEFAULT_LOCALE, helpers
+│   └── sanity.types.ts        # generated by `npm run sanity:codegen`
+└── styles/global.css
+```
 
-- Rename or create pages: /src/pages/nb -> /src/pages/[your-locale]
-- astro.config.mjs
-- sanity.config.ts
-- /src/pages/index.astro
-- /src/pages/nb/index.astro (or the equivalent folder for your locale)
-- /src/pages/post/[slug].astro
-- /src/pages/nb/post/[slug].astro (or the equivalent folder for your locale)
+## Schemas
 
-If you only need a single language, consider using the simpler template: https://github.com/SananMaarouf/astro-sanity
+| Type | Notes |
+|---|---|
+| `siteSettings` | Singleton. `title`, `description`, `ogImage`, `siteUrl`, `primaryNav` reference. |
+| `navigation` | Reusable nav lists; items can use either a manual `href` or an `internalRef` to a `post`/`page`/`category`. |
+| `footer` | Singleton. Contact details + per-locale `address` and `copyright`. |
+| `landing` | Singleton. Hero with optional video and YouTube embed. |
+| `page` | Generic CMS page (`/{locale}/[slug]`). |
+| `post` | Localized title + body, references author and categories. |
+| `category` / `author` | Index targets for posts. |
 
-## Deployment & Adapters & CORS
-If you are only using Astro as a static site builder, you don't need an adapter. But in this template, the Sanity-CMS /studio route is a on-demand rendered route, so we use the Node adapter standalone mode. 
-When you run "npm run build" i will generate the static pages (but not the /studio route) to the dist folder.
+All localized fields use `internationalizedArrayString`,
+`internationalizedArrayText`, or `internationalizedArrayBlockContent`.
 
-If you plan on hosting this on a cloud provider such as Netlify, Vercel or Cloudflare, refer to the [Astro docs](https://docs.astro.build/en/guides/on-demand-rendering/) for a list of adapters to use in:
-- astro.config.mjs
+## Adding a locale
 
-so it builds correctly in their environment.
+Three places need to learn about the new locale (e.g. `fr`):
+
+1. **`astro.config.mjs`** — append to `i18n.locales`.
+2. **`sanity.config.ts`** — append to the `internationalizedArray`
+   `languages` list.
+3. **`src/sanity/lib/locale.ts`** — append to the `LOCALES` tuple.
+   The `[locale]/` routes pick it up automatically through `NON_DEFAULT_LOCALES`.
+
+Then re-run `npm run sanity:codegen` and restart the dev server.
+
+## Deployment
+
+The site builds to static HTML in `dist/`. For Vercel / Netlify / Cloudflare,
+add the matching adapter to `astro.config.mjs`. See the
+[Astro adapter guide](https://docs.astro.build/en/guides/on-demand-rendering/).
+
+Don't forget to add your production origin to the Sanity CORS allowlist:
+
+```bash
+npm run sanity:cors-add -- https://your-site.example --credentials
+```
 
 ## Troubleshooting
-If you go to "/studio" route and just get a blank page, check the console log in the browser.
-It is likely that the origin (http://localhost:4321) is not allowed access to the project. 
-To fix that run:
-`npm run sanity:cors-add`  
-or go in to sanity and do it. [follow this guide](https://www.sanity.io/docs/content-lake/cors)
 
-## Guides used for creating this template repository
-### [Guide to localization in Sanity CMS](https://www.sanity.io/docs/studio/localization)
+- **Blank `/studio` page** — usually CORS. Open the browser console; if you
+  see CORS errors, run `npm run sanity:cors-add -- http://localhost:4321 --credentials`.
+- **`sanity:codegen` fails with "schema.json not found"** — start the Studio
+  once (`npm run sanity:dev`) to deploy the schema, then re-run codegen.
+- **Posts don't show up in one locale** — the i18n filter is intentional: a
+  post only renders in locales where its `title` (and other localized fields)
+  have a value. Open the document in the Studio and add the missing translation.
+- **Type errors after schema changes** — re-run `npm run sanity:codegen`.
 
-### [Guide to Internationalization in Astro](https://docs.astro.build/en/guides/internationalization/)
+## References
+
+- [Astro i18n routing](https://docs.astro.build/en/guides/internationalization/)
+- [Sanity localization patterns](https://www.sanity.io/docs/studio/localization)
+- [`@sanity/astro` integration](https://www.sanity.io/docs/connect-your-content-to-next-js)
