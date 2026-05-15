@@ -90,5 +90,29 @@ const menu: MenuItem[] = (settings?.primaryNav?.items ?? [])
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      (() => {
+        const setHeight = (el) =>
+          document.documentElement.style.setProperty(
+            "--navbar-height",
+            `${el.offsetHeight}px`,
+          );
+
+        const attach = () => {
+          const navbar = document.getElementById("site-navbar");
+          if (!navbar) return false;
+          setHeight(navbar);
+          new ResizeObserver(() => setHeight(navbar)).observe(navbar);
+          return true;
+        };
+
+        if (!attach()) {
+          const mo = new MutationObserver(() => {
+            if (attach()) mo.disconnect();
+          });
+          mo.observe(document.body, { childList: true, subtree: true });
+        }
+      })();
+    </script>
   </body>
 </html>

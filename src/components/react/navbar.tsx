@@ -48,7 +48,10 @@ interface NavbarProps {
 
 const Navbar = ({ logo, menu = [], linkBtn, children }: NavbarProps) => {
   return (
-    <section className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b pt-4 pb-4">
+    <section
+      id="site-navbar"
+      className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b pt-4 pb-4"
+    >
       <div className="container">
         {/* Desktop Menu */}
         <nav className="hidden justify-between gap-3 lg:flex">
