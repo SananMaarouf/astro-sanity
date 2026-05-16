@@ -134,10 +134,9 @@ export const FOOTER_QUERY = defineQuery(`
 
 export const LANDING_QUERY = defineQuery(`
   *[_type == "landing"][0]{
-    "title":      coalesce(title[_key == $locale][0].value, title[0].value),
+    "title":       coalesce(title[_key == $locale][0].value, title[0].value),
+    landingImage{ asset, alt },
     image{ asset, alt },
-    youtubeUrl,
-    video{ asset->{ url } },
     "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),
     "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)
   }

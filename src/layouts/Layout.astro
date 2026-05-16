@@ -4,6 +4,7 @@ import { Navbar, type MenuItem } from "@/components/react/navbar";
 import Footer from "@/components/Footer.astro";
 import SEO from "@/components/SEO.astro";
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
+import LanguageSwitcherMobile from "@/components/LanguageSwitcherMobile.astro";
 import { loadQuery } from "@/sanity/lib/load-query";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { resolveLocale, localizedPath, type Locale } from "@/sanity/lib/locale";
@@ -85,6 +86,7 @@ const menu: MenuItem[] = (settings?.primaryNav?.items ?? [])
       linkBtn={{ title: "Posts", url: localizedPath(locale, "/posts") }}
     >
       <LanguageSwitcher />
+      <LanguageSwitcherMobile slot="mobileExtras" />
     </Navbar>
     <main class="flex-1">
       <slot />

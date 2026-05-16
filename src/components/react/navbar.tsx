@@ -44,9 +44,10 @@ interface NavbarProps {
     url: string;
   };
   children?: ReactNode;
+  mobileExtras?: ReactNode;
 }
 
-const Navbar = ({ logo, menu = [], linkBtn, children }: NavbarProps) => {
+const Navbar = ({ logo, menu = [], linkBtn, children, mobileExtras }: NavbarProps) => {
   return (
     <section
       id="site-navbar"
@@ -135,7 +136,18 @@ const Navbar = ({ logo, menu = [], linkBtn, children }: NavbarProps) => {
                         <a href={linkBtn.url}>{linkBtn.title}</a>
                       </Button>
                     )}
-                    {children && <div className="flex items-center">{children}</div>}
+                    {mobileExtras && (
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="language" className="border-b-0">
+                          <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
+                            Language
+                          </AccordionTrigger>
+                          <AccordionContent className="mt-2">
+                            {mobileExtras}
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    )}
                     <ThemeSwitcherMobile />
                   </div>
                 </div>

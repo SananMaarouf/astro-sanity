@@ -11,6 +11,15 @@ export const landingType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "landingImage",
+      type: "image",
+      description: "Hero image for the landing page",
+      options: { hotspot: true },
+      fields: [
+        { name: "alt", type: "string", title: "Alternative Text" },
+      ],
+    }),
+    defineField({
       name: "image",
       type: "image",
       description: "Fallback / thumbnail image",
@@ -18,20 +27,6 @@ export const landingType = defineType({
       fields: [
         { name: "alt", type: "string", title: "Alternative Text" },
       ],
-    }),
-    defineField({
-      name: "youtubeUrl",
-      title: "YouTube Video ID",
-      type: "string",
-      description:
-        "YouTube video ID. For https://www.youtube.com/watch?v=dWXexKyF1U8 the ID is dWXexKyF1U8",
-    }),
-    defineField({
-      name: "video",
-      title: "Video File",
-      type: "file",
-      description: "Optional video file displayed on the landing page.",
-      options: { accept: "video/*" },
     }),
     defineField({
       name: "ctaText",
