@@ -179,13 +179,6 @@ export type Post = {
   body?: InternationalizedArrayBlockContent;
 };
 
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-};
-
 export type Landing = {
   _id: string;
   _type: "landing";
@@ -193,7 +186,7 @@ export type Landing = {
   _updatedAt: string;
   _rev: string;
   title?: InternationalizedArrayString;
-  image?: {
+  landingImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
@@ -201,11 +194,13 @@ export type Landing = {
     alt?: string;
     _type: "image";
   };
-  youtubeUrl?: string;
-  video?: {
-    asset?: SanityFileAssetReference;
+  image?: {
+    asset?: SanityImageAssetReference;
     media?: unknown;
-    _type: "file";
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
   };
   ctaText?: InternationalizedArrayString;
   ctaBtnText?: InternationalizedArrayString;
@@ -413,7 +408,6 @@ export type AllSanitySchemaTypes =
   | Slug
   | AuthorReference
   | Post
-  | SanityFileAssetReference
   | Landing
   | Footer
   | Category
@@ -613,18 +607,16 @@ export type FOOTER_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LANDING_QUERY
-// Query: *[_type == "landing"][0]{    "title":      coalesce(title[_key == $locale][0].value, title[0].value),    image{ asset, alt },    youtubeUrl,    video{ asset->{ url } },    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)  }
+// Query: *[_type == "landing"][0]{    "title":       coalesce(title[_key == $locale][0].value, title[0].value),    landingImage{ asset, alt },    image{ asset, alt },    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)  }
 export type LANDING_QUERY_RESULT = {
   title: string | null;
-  image: {
+  landingImage: {
     asset: SanityImageAssetReference | null;
     alt: string | null;
   } | null;
-  youtubeUrl: string | null;
-  video: {
-    asset: {
-      url: string | null;
-    } | null;
+  image: {
+    asset: SanityImageAssetReference | null;
+    alt: string | null;
   } | null;
   ctaText: string | null;
   ctaBtnText: string | null;
@@ -645,6 +637,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    "title":          coalesce(title[_key == $locale][0].value, title[0].value),\n    "body":           coalesce(body[_key == $locale][0].value, body[0].value),\n    "seoDescription": coalesce(seoDescription[_key == $locale][0].value, seoDescription[0].value),\n    "slug":           slug.current,\n    ogImage\n  }\n': PAGE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "siteSettings"][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    "description": coalesce(description[_key == $locale][0].value, description[0].value),\n    siteUrl,\n    ogImage,\n    "primaryNav": primaryNav->{\n      items[]{\n        "label": coalesce(label[_key == $locale][0].value, label[0].value),\n        href,\n        "internalRef": internalRef->{ _type, "slug": slug.current }\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "footer"][0]{\n    instagramURL,\n    cellNumber,\n    email,\n    "address":   coalesce(address[_key == $locale][0].value, address[0].value),\n    "copyright": coalesce(copyright[_key == $locale][0].value, copyright[0].value)\n  }\n': FOOTER_QUERY_RESULT;
-    '\n  *[_type == "landing"][0]{\n    "title":      coalesce(title[_key == $locale][0].value, title[0].value),\n    image{ asset, alt },\n    youtubeUrl,\n    video{ asset->{ url } },\n    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),\n    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)\n  }\n': LANDING_QUERY_RESULT;
+    '\n  *[_type == "landing"][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    landingImage{ asset, alt },\n    image{ asset, alt },\n    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),\n    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)\n  }\n': LANDING_QUERY_RESULT;
   }
 }
