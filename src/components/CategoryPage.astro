@@ -1,13 +1,11 @@
 ---
 import PostCard from "@/components/PostCard.astro";
-import type { Locale } from "@/sanity/lib/locale";
 
 interface Props {
   category: any;
-  locale: Locale;
 }
 
-const { category, locale } = Astro.props;
+const { category } = Astro.props;
 ---
 <section class="container mx-auto px-4 py-10">
   <h1 class="text-3xl font-bold mb-2">{category.title}</h1>
@@ -22,7 +20,6 @@ const { category, locale } = Astro.props;
           slug={post.slug}
           publishedAt={post.publishedAt}
           mainImage={post.mainImage}
-          locale={locale}
         />
       ))}
     </div>

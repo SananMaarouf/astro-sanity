@@ -1,5 +1,4 @@
 ---
-import { localizedPath, type Locale } from "@/sanity/lib/locale";
 import { urlForImage } from "@/sanity/lib/url-for-image";
 
 interface Props {
@@ -7,18 +6,17 @@ interface Props {
   slug: string;
   publishedAt?: string;
   mainImage?: { asset?: any; alt?: string };
-  locale: Locale;
 }
 
-const { title, slug, publishedAt, mainImage, locale } = Astro.props;
+const { title, slug, publishedAt, mainImage } = Astro.props;
 
-const href = localizedPath(locale, `/post/${slug}`);
+const href = `/post/${slug}`;
 const imgUrl = mainImage?.asset
   ? urlForImage(mainImage.asset).width(640).height(360).fit("crop").url()
   : null;
 
 const dateLabel = publishedAt
-  ? new Date(publishedAt).toLocaleDateString(locale, {
+  ? new Date(publishedAt).toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
       day: "numeric",

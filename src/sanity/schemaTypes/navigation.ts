@@ -21,7 +21,7 @@ export const navigationType = defineType({
           fields: [
             {
               name: "label",
-              type: "internationalizedArrayString",
+              type: "string",
               validation: (rule) => rule.required(),
             },
             {
@@ -42,16 +42,12 @@ export const navigationType = defineType({
           ],
           preview: {
             select: {
-              labels: "label",
+              label: "label",
               href: "href",
               ref: "internalRef.slug.current",
             },
-            prepare({ labels, href, ref }) {
-              const label =
-                Array.isArray(labels) && labels.length > 0
-                  ? labels[0].value
-                  : "Untitled";
-              return { title: label, subtitle: ref ? `→ ${ref}` : href };
+            prepare({ label, href, ref }) {
+              return { title: label ?? "Untitled", subtitle: ref ? `→ ${ref}` : href };
             },
           },
         }),

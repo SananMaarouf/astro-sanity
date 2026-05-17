@@ -16,14 +16,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   output: 'static',
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'nb'],
-    routing: {
-      prefixDefaultLocale: false,
-      redirectToDefaultLocale: false,
-    },
-  },
   integrations: [
     sanity({
       projectId: PUBLIC_SANITY_PROJECT_ID,

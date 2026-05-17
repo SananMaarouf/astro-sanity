@@ -1,13 +1,9 @@
 ---
 import { loadQuery } from "@/sanity/lib/load-query";
 import { FOOTER_QUERY } from "@/sanity/lib/queries";
-import { resolveLocale } from "@/sanity/lib/locale";
-
-const locale = resolveLocale(Astro.currentLocale);
 
 const { data: footer } = await loadQuery<any>({
   query: FOOTER_QUERY,
-  params: { locale },
 });
 ---
 <footer class="">

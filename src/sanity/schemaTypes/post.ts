@@ -6,19 +6,12 @@ export const postType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "internationalizedArrayString",
+      type: "string",
     }),
     defineField({
       name: "slug",
       type: "slug",
-      options: {
-        source: (doc) => {
-          // Extract the first available title from the internationalized array
-          const titles = doc.title as Array<{ value: string; _key: string }>;
-          return titles?.[0]?.value || "";
-        },
-        maxLength: 96,
-      },
+      options: { source: "title", maxLength: 96 },
     }),
     defineField({
       name: "author",
@@ -50,23 +43,18 @@ export const postType = defineType({
     }),
     defineField({
       name: "body",
-      type: "internationalizedArrayBlockContent",
+      type: "blockContent",
     }),
   ],
 
   preview: {
     select: {
-      titles: "title",
+      title: "title",
       author: "author.name",
       media: "mainImage",
     },
-    prepare(selection) {
-      const { titles, author } = selection;
-      // Extract the first title from the internationalized array
-      const title = Array.isArray(titles) && titles.length > 0
-        ? titles[0].value
-        : "Untitled";
-      return { title, subtitle: author && `by ${author}`, media: selection.media };
+    prepare({ title, author, media }) {
+      return { title: title ?? "Untitled", subtitle: author && `by ${author}`, media };
     },
   },
 });

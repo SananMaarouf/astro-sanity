@@ -2,14 +2,12 @@
 import PostCard from "@/components/PostCard.astro";
 import PortableText from "@/components/PortableText.astro";
 import SanityImage from "@/components/SanityImage.astro";
-import type { Locale } from "@/sanity/lib/locale";
 
 interface Props {
   author: any;
-  locale: Locale;
 }
 
-const { author, locale } = Astro.props;
+const { author } = Astro.props;
 ---
 <section class="container mx-auto px-4 py-10">
   <header class="flex items-start gap-6 mb-10">
@@ -36,7 +34,6 @@ const { author, locale } = Astro.props;
           slug={post.slug}
           publishedAt={post.publishedAt}
           mainImage={post.mainImage}
-          locale={locale}
         />
       ))}
     </div>

@@ -2,22 +2,18 @@
 import { loadQuery } from "@/sanity/lib/load-query";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/url-for-image";
-import { LOCALES, type Locale, localizedPath } from "@/sanity/lib/locale";
 
 interface Props {
-  locale: Locale;
   title?: string;
   description?: string;
   image?: { asset?: any; alt?: string };
-  /** Path *without* the locale prefix, e.g. `/post/hello`. */
   path?: string;
 }
 
-const { locale, title, description, image, path = "/" } = Astro.props;
+const { title, description, image, path = "/" } = Astro.props;
 
 const { data: settings } = await loadQuery<any>({
   query: SITE_SETTINGS_QUERY,
-  params: { locale },
 });
 
 const siteTitle = settings?.title ?? "Astro + Sanity";
@@ -30,26 +26,16 @@ const ogImageUrl = imgSource
   ? urlForImage(imgSource).width(1200).height(630).fit("crop").url()
   : undefined;
 
-const canonical = `${baseUrl}${localizedPath(locale, path)}`;
+const canonical = `${baseUrl}${path}`;
 ---
 <title>{fullTitle}</title>
 <meta name="description" content={desc} />
 <link rel="canonical" href={canonical} />
 
-{LOCALES.map((alt) => (
-  <link
-    rel="alternate"
-    hreflang={alt}
-    href={`${baseUrl}${localizedPath(alt, path)}`}
-  />
-))}
-<link rel="alternate" hreflang="x-default" href={`${baseUrl}${localizedPath("en", path)}`} />
-
 <meta property="og:type" content="website" />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={desc} />
 <meta property="og:url" content={canonical} />
-<meta property="og:locale" content={locale} />
 {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
 
 <meta name="twitter:card" content="summary_large_image" />

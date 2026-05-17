@@ -3,32 +3,24 @@ import Layout from "@/layouts/Layout.astro";
 import PortableText from "@/components/PortableText.astro";
 import { loadQuery } from "@/sanity/lib/load-query";
 import { PAGE_SLUGS_QUERY, PAGE_BY_SLUG_QUERY } from "@/sanity/lib/queries";
-import { NON_DEFAULT_LOCALES, type Locale } from "@/sanity/lib/locale";
 
 export async function getStaticPaths() {
-  const out: Array<{ params: { locale: Locale; page: string } }> = [];
-  for (const locale of NON_DEFAULT_LOCALES) {
-    const { data } = await loadQuery<Array<{ slug: string }>>({
-      query: PAGE_SLUGS_QUERY,
-      params: { locale },
-    });
-    for (const { slug } of data ?? []) out.push({ params: { locale, page: slug } });
-  }
-  return out;
+  const { data } = await loadQuery<Array<{ slug: string }>>({
+    query: PAGE_SLUGS_QUERY,
+  });
+  return (data ?? []).map(({ slug }) => ({ params: { page: slug } }));
 }
 
-const locale = Astro.params.locale as Locale;
 const slug = Astro.params.page as string;
 
 const { data: page } = await loadQuery<any>({
   query: PAGE_BY_SLUG_QUERY,
-  params: { slug, locale },
+  params: { slug },
 });
 
-if (!page) throw new Error(`Page not found: ${locale}/${slug}`);
+if (!page) throw new Error(`Page not found: ${slug}`);
 ---
 <Layout
-  locale={locale}
   title={page.title}
   description={page.seoDescription}
   image={page.ogImage}

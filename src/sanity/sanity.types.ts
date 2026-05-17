@@ -35,8 +35,8 @@ export type SiteSettings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: InternationalizedArrayString;
-  description?: InternationalizedArrayText;
+  title?: string;
+  description?: string;
   ogImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -64,18 +64,6 @@ export type SanityImageHotspot = {
   height?: number;
   width?: number;
 };
-
-export type InternationalizedArrayText = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayTextValue
->;
-
-export type InternationalizedArrayString = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayStringValue
->;
 
 export type PostReference = {
   _ref: string;
@@ -106,7 +94,7 @@ export type Navigation = {
   _rev: string;
   title?: string;
   items?: Array<{
-    label?: InternationalizedArrayString;
+    label?: string;
     href?: string;
     internalRef?: PostReference | PageReference | CategoryReference;
     _type: "navItem";
@@ -120,10 +108,10 @@ export type Page = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: InternationalizedArrayString;
+  title?: string;
   slug?: Slug;
-  body?: InternationalizedArrayBlockContent;
-  seoDescription?: InternationalizedArrayText;
+  body?: BlockContent;
+  seoDescription?: string;
   ogImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -132,102 +120,6 @@ export type Page = {
     alt?: string;
     _type: "image";
   };
-};
-
-export type InternationalizedArrayBlockContent = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayBlockContentValue
->;
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type AuthorReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "author";
-};
-
-export type Post = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: InternationalizedArrayString;
-  slug?: Slug;
-  author?: AuthorReference;
-  mainImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  categories?: Array<
-    {
-      _key: string;
-    } & CategoryReference
-  >;
-  publishedAt?: string;
-  body?: InternationalizedArrayBlockContent;
-};
-
-export type Landing = {
-  _id: string;
-  _type: "landing";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: InternationalizedArrayString;
-  landingImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  image?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  ctaText?: InternationalizedArrayString;
-  ctaBtnText?: InternationalizedArrayString;
-};
-
-export type Footer = {
-  _id: string;
-  _type: "footer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  instagramURL?: string;
-  cellNumber?: string;
-  email?: string;
-  address?: InternationalizedArrayString;
-  copyright?: InternationalizedArrayString;
-};
-
-export type Category = {
-  _id: string;
-  _type: "category";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: InternationalizedArrayString;
-  slug?: Slug;
-  description?: InternationalizedArrayText;
 };
 
 export type BlockContent = Array<
@@ -260,6 +152,96 @@ export type BlockContent = Array<
     }
 >;
 
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type Post = {
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: AuthorReference;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  categories?: Array<
+    {
+      _key: string;
+    } & CategoryReference
+  >;
+  publishedAt?: string;
+  body?: BlockContent;
+};
+
+export type Landing = {
+  _id: string;
+  _type: "landing";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  landingImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  ctaText?: string;
+  ctaBtnText?: string;
+};
+
+export type Footer = {
+  _id: string;
+  _type: "footer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  instagramURL?: string;
+  cellNumber?: string;
+  email?: string;
+  address?: string;
+  copyright?: string;
+};
+
+export type Category = {
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  description?: string;
+};
+
 export type Author = {
   _id: string;
   _type: "author";
@@ -276,22 +258,7 @@ export type Author = {
     alt?: string;
     _type: "image";
   };
-  bio?: InternationalizedArrayBlockContent;
-};
-
-export type InternationalizedArrayBlockContentValue = {
-  _type: "internationalizedArrayBlockContentValue";
-  value?: BlockContent;
-};
-
-export type InternationalizedArrayTextValue = {
-  _type: "internationalizedArrayTextValue";
-  value?: string;
-};
-
-export type InternationalizedArrayStringValue = {
-  _type: "internationalizedArrayStringValue";
-  value?: string;
+  bio?: BlockContent;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -397,25 +364,19 @@ export type AllSanitySchemaTypes =
   | SiteSettings
   | SanityImageCrop
   | SanityImageHotspot
-  | InternationalizedArrayText
-  | InternationalizedArrayString
   | PostReference
   | PageReference
   | CategoryReference
   | Navigation
   | Page
-  | InternationalizedArrayBlockContent
+  | BlockContent
   | Slug
   | AuthorReference
   | Post
   | Landing
   | Footer
   | Category
-  | BlockContent
   | Author
-  | InternationalizedArrayBlockContentValue
-  | InternationalizedArrayTextValue
-  | InternationalizedArrayStringValue
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -427,14 +388,14 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: POST_SLUGS_QUERY
-// Query: *[_type == "post" && count(title[_key == $locale && value != null]) > 0]{    "slug": slug.current  }
+// Query: *[_type == "post" && defined(slug.current)]{    "slug": slug.current  }
 export type POST_SLUGS_QUERY_RESULT = Array<{
   slug: string | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: POST_BY_SLUG_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{    "title":       coalesce(title[_key == $locale][0].value, title[0].value),    "body":        coalesce(body[_key == $locale][0].value,  body[0].value),    publishedAt,    mainImage{ asset, alt },    "author": author->{      name,      "slug": slug.current,      image    },    "categories": categories[]->{      "title": coalesce(title[_key == $locale][0].value, title[0].value),      "slug":  slug.current    }  }
+// Query: *[_type == "post" && slug.current == $slug][0]{    title,    body,    publishedAt,    mainImage{ asset, alt },    "author": author->{      name,      "slug": slug.current,      image    },    "categories": categories[]->{      title,      "slug": slug.current    }  }
 export type POST_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   body: BlockContent | null;
@@ -463,7 +424,7 @@ export type POST_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: POSTS_INDEX_QUERY
-// Query: *[_type == "post" && count(title[_key == $locale && value != null]) > 0]    | order(publishedAt desc){    "title":     coalesce(title[_key == $locale][0].value, title[0].value),    "slug":      slug.current,    publishedAt,    mainImage{ asset, alt }  }
+// Query: *[_type == "post" && defined(slug.current)] | order(publishedAt desc){    title,    "slug": slug.current,    publishedAt,    mainImage{ asset, alt }  }
 export type POSTS_INDEX_QUERY_RESULT = Array<{
   title: string | null;
   slug: string | null;
@@ -476,14 +437,14 @@ export type POSTS_INDEX_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: CATEGORY_SLUGS_QUERY
-// Query: *[_type == "category" && count(title[_key == $locale && value != null]) > 0]{    "slug": slug.current  }
+// Query: *[_type == "category" && defined(slug.current)]{    "slug": slug.current  }
 export type CATEGORY_SLUGS_QUERY_RESULT = Array<{
   slug: string | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: CATEGORY_BY_SLUG_QUERY
-// Query: *[_type == "category" && slug.current == $slug][0]{    "title":       coalesce(title[_key == $locale][0].value, title[0].value),    "description": coalesce(description[_key == $locale][0].value, description[0].value),    "slug":        slug.current,    "posts": *[_type == "post" && references(^._id)      && count(title[_key == $locale && value != null]) > 0]      | order(publishedAt desc){      "title":     coalesce(title[_key == $locale][0].value, title[0].value),      "slug":      slug.current,      publishedAt,      mainImage{ asset, alt }    }  }
+// Query: *[_type == "category" && slug.current == $slug][0]{    title,    description,    "slug": slug.current,    "posts": *[_type == "post" && references(^._id) && defined(slug.current)]      | order(publishedAt desc){      title,      "slug": slug.current,      publishedAt,      mainImage{ asset, alt }    }  }
 export type CATEGORY_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   description: string | null;
@@ -508,7 +469,7 @@ export type AUTHOR_SLUGS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: AUTHOR_BY_SLUG_QUERY
-// Query: *[_type == "author" && slug.current == $slug][0]{    name,    "slug": slug.current,    image,    "bio": coalesce(bio[_key == $locale][0].value, bio[0].value),    "posts": *[_type == "post" && references(^._id)      && count(title[_key == $locale && value != null]) > 0]      | order(publishedAt desc){      "title":     coalesce(title[_key == $locale][0].value, title[0].value),      "slug":      slug.current,      publishedAt,      mainImage{ asset, alt }    }  }
+// Query: *[_type == "author" && slug.current == $slug][0]{    name,    "slug": slug.current,    image,    bio,    "posts": *[_type == "post" && references(^._id) && defined(slug.current)]      | order(publishedAt desc){      title,      "slug": slug.current,      publishedAt,      mainImage{ asset, alt }    }  }
 export type AUTHOR_BY_SLUG_QUERY_RESULT = {
   name: string | null;
   slug: string | null;
@@ -534,14 +495,14 @@ export type AUTHOR_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAGE_SLUGS_QUERY
-// Query: *[_type == "page" && count(title[_key == $locale && value != null]) > 0]{    "slug": slug.current  }
+// Query: *[_type == "page" && defined(slug.current)]{    "slug": slug.current  }
 export type PAGE_SLUGS_QUERY_RESULT = Array<{
   slug: string | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PAGE_BY_SLUG_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{    "title":          coalesce(title[_key == $locale][0].value, title[0].value),    "body":           coalesce(body[_key == $locale][0].value, body[0].value),    "seoDescription": coalesce(seoDescription[_key == $locale][0].value, seoDescription[0].value),    "slug":           slug.current,    ogImage  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    title,    body,    seoDescription,    "slug": slug.current,    ogImage  }
 export type PAGE_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   body: BlockContent | null;
@@ -559,7 +520,7 @@ export type PAGE_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{    "title":       coalesce(title[_key == $locale][0].value, title[0].value),    "description": coalesce(description[_key == $locale][0].value, description[0].value),    siteUrl,    ogImage,    "primaryNav": primaryNav->{      items[]{        "label": coalesce(label[_key == $locale][0].value, label[0].value),        href,        "internalRef": internalRef->{ _type, "slug": slug.current }      }    }  }
+// Query: *[_type == "siteSettings"][0]{    title,    description,    siteUrl,    ogImage,    "primaryNav": primaryNav->{      items[]{        label,        href,        "internalRef": internalRef->{ _type, "slug": slug.current }      }    }  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   title: string | null;
   description: string | null;
@@ -596,7 +557,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: FOOTER_QUERY
-// Query: *[_type == "footer"][0]{    instagramURL,    cellNumber,    email,    "address":   coalesce(address[_key == $locale][0].value, address[0].value),    "copyright": coalesce(copyright[_key == $locale][0].value, copyright[0].value)  }
+// Query: *[_type == "footer"][0]{    instagramURL,    cellNumber,    email,    address,    copyright  }
 export type FOOTER_QUERY_RESULT = {
   instagramURL: string | null;
   cellNumber: string | null;
@@ -607,7 +568,7 @@ export type FOOTER_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: LANDING_QUERY
-// Query: *[_type == "landing"][0]{    "title":       coalesce(title[_key == $locale][0].value, title[0].value),    landingImage{ asset, alt },    image{ asset, alt },    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)  }
+// Query: *[_type == "landing"][0]{    title,    landingImage{ asset, alt },    image{ asset, alt },    ctaText,    ctaBtnText  }
 export type LANDING_QUERY_RESULT = {
   title: string | null;
   landingImage: {
@@ -626,17 +587,17 @@ export type LANDING_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "post" && count(title[_key == $locale && value != null]) > 0]{\n    "slug": slug.current\n  }\n': POST_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "post" && slug.current == $slug][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    "body":        coalesce(body[_key == $locale][0].value,  body[0].value),\n    publishedAt,\n    mainImage{ asset, alt },\n    "author": author->{\n      name,\n      "slug": slug.current,\n      image\n    },\n    "categories": categories[]->{\n      "title": coalesce(title[_key == $locale][0].value, title[0].value),\n      "slug":  slug.current\n    }\n  }\n': POST_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "post" && count(title[_key == $locale && value != null]) > 0]\n    | order(publishedAt desc){\n    "title":     coalesce(title[_key == $locale][0].value, title[0].value),\n    "slug":      slug.current,\n    publishedAt,\n    mainImage{ asset, alt }\n  }\n': POSTS_INDEX_QUERY_RESULT;
-    '\n  *[_type == "category" && count(title[_key == $locale && value != null]) > 0]{\n    "slug": slug.current\n  }\n': CATEGORY_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "category" && slug.current == $slug][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    "description": coalesce(description[_key == $locale][0].value, description[0].value),\n    "slug":        slug.current,\n    "posts": *[_type == "post" && references(^._id)\n      && count(title[_key == $locale && value != null]) > 0]\n      | order(publishedAt desc){\n      "title":     coalesce(title[_key == $locale][0].value, title[0].value),\n      "slug":      slug.current,\n      publishedAt,\n      mainImage{ asset, alt }\n    }\n  }\n': CATEGORY_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "post" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': POST_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "post" && slug.current == $slug][0]{\n    title,\n    body,\n    publishedAt,\n    mainImage{ asset, alt },\n    "author": author->{\n      name,\n      "slug": slug.current,\n      image\n    },\n    "categories": categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': POST_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "post" && defined(slug.current)] | order(publishedAt desc){\n    title,\n    "slug": slug.current,\n    publishedAt,\n    mainImage{ asset, alt }\n  }\n': POSTS_INDEX_QUERY_RESULT;
+    '\n  *[_type == "category" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': CATEGORY_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "category" && slug.current == $slug][0]{\n    title,\n    description,\n    "slug": slug.current,\n    "posts": *[_type == "post" && references(^._id) && defined(slug.current)]\n      | order(publishedAt desc){\n      title,\n      "slug": slug.current,\n      publishedAt,\n      mainImage{ asset, alt }\n    }\n  }\n': CATEGORY_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "author" && defined(slug.current)]{ "slug": slug.current }\n': AUTHOR_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "author" && slug.current == $slug][0]{\n    name,\n    "slug": slug.current,\n    image,\n    "bio": coalesce(bio[_key == $locale][0].value, bio[0].value),\n    "posts": *[_type == "post" && references(^._id)\n      && count(title[_key == $locale && value != null]) > 0]\n      | order(publishedAt desc){\n      "title":     coalesce(title[_key == $locale][0].value, title[0].value),\n      "slug":      slug.current,\n      publishedAt,\n      mainImage{ asset, alt }\n    }\n  }\n': AUTHOR_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "page" && count(title[_key == $locale && value != null]) > 0]{\n    "slug": slug.current\n  }\n': PAGE_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "page" && slug.current == $slug][0]{\n    "title":          coalesce(title[_key == $locale][0].value, title[0].value),\n    "body":           coalesce(body[_key == $locale][0].value, body[0].value),\n    "seoDescription": coalesce(seoDescription[_key == $locale][0].value, seoDescription[0].value),\n    "slug":           slug.current,\n    ogImage\n  }\n': PAGE_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "siteSettings"][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    "description": coalesce(description[_key == $locale][0].value, description[0].value),\n    siteUrl,\n    ogImage,\n    "primaryNav": primaryNav->{\n      items[]{\n        "label": coalesce(label[_key == $locale][0].value, label[0].value),\n        href,\n        "internalRef": internalRef->{ _type, "slug": slug.current }\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '\n  *[_type == "footer"][0]{\n    instagramURL,\n    cellNumber,\n    email,\n    "address":   coalesce(address[_key == $locale][0].value, address[0].value),\n    "copyright": coalesce(copyright[_key == $locale][0].value, copyright[0].value)\n  }\n': FOOTER_QUERY_RESULT;
-    '\n  *[_type == "landing"][0]{\n    "title":       coalesce(title[_key == $locale][0].value, title[0].value),\n    landingImage{ asset, alt },\n    image{ asset, alt },\n    "ctaText":    coalesce(ctaText[_key == $locale][0].value, ctaText[0].value),\n    "ctaBtnText": coalesce(ctaBtnText[_key == $locale][0].value, ctaBtnText[0].value)\n  }\n': LANDING_QUERY_RESULT;
+    '\n  *[_type == "author" && slug.current == $slug][0]{\n    name,\n    "slug": slug.current,\n    image,\n    bio,\n    "posts": *[_type == "post" && references(^._id) && defined(slug.current)]\n      | order(publishedAt desc){\n      title,\n      "slug": slug.current,\n      publishedAt,\n      mainImage{ asset, alt }\n    }\n  }\n': AUTHOR_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "page" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PAGE_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    title,\n    body,\n    seoDescription,\n    "slug": slug.current,\n    ogImage\n  }\n': PAGE_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "siteSettings"][0]{\n    title,\n    description,\n    siteUrl,\n    ogImage,\n    "primaryNav": primaryNav->{\n      items[]{\n        label,\n        href,\n        "internalRef": internalRef->{ _type, "slug": slug.current }\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "footer"][0]{\n    instagramURL,\n    cellNumber,\n    email,\n    address,\n    copyright\n  }\n': FOOTER_QUERY_RESULT;
+    '\n  *[_type == "landing"][0]{\n    title,\n    landingImage{ asset, alt },\n    image{ asset, alt },\n    ctaText,\n    ctaBtnText\n  }\n': LANDING_QUERY_RESULT;
   }
 }

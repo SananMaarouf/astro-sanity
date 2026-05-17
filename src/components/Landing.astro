@@ -2,17 +2,9 @@
 import { loadQuery } from "@/sanity/lib/load-query";
 import { LANDING_QUERY } from "@/sanity/lib/queries";
 import { urlForImage } from "@/sanity/lib/url-for-image";
-import { resolveLocale } from "@/sanity/lib/locale";
-
-interface Props {
-  locale?: string;
-}
-
-const locale = resolveLocale(Astro.props.locale ?? Astro.currentLocale);
 
 const { data: landing } = await loadQuery<any>({
   query: LANDING_QUERY,
-  params: { locale },
 });
 
 const bgUrl = landing?.image?.asset
@@ -27,7 +19,7 @@ const landingImage = landing?.landingImage?.asset
   landing && (
     <div
       class="
-  relative h-[calc(100svh-var(--navbar-height,4.5rem))] 
+  relative h-[calc(100svh-var(--navbar-height,4.5rem))]
   w-full overflow-hidden"
       style={
         bgUrl

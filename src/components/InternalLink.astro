@@ -1,10 +1,8 @@
 ---
 import {sanityClient} from 'sanity:client'
-import {localizedPath, resolveLocale} from '@/sanity/lib/locale'
 
 const {node} = Astro.props
 const {markDef} = node
-const locale = resolveLocale(Astro.currentLocale)
 
 // Only deal with posts links for this example
 const destination =
@@ -16,7 +14,7 @@ const destination =
 const linkText = node.children.map((c: any) => c.text).join(' ')
 ---
 
-{destination && <a href={localizedPath(locale, `/post/${destination.slug.current}`)}>{linkText}</a>}
+{destination && <a href={`/post/${destination.slug.current}`}>{linkText}</a>}
 {!destination && <span class="missingInternalLink">{linkText}</span>}
 
 <style>

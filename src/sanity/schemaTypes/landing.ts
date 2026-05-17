@@ -7,7 +7,7 @@ export const landingType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "internationalizedArrayString",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -30,12 +30,12 @@ export const landingType = defineType({
     }),
     defineField({
       name: "ctaText",
-      type: "internationalizedArrayString",
+      type: "string",
       description: "Call to action text",
     }),
     defineField({
       name: "ctaBtnText",
-      type: "internationalizedArrayString",
+      type: "string",
       description: "Call to action button label",
       validation: (rule) => rule.required(),
     }),

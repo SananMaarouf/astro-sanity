@@ -25,7 +25,7 @@ export const authorType = defineType({
     }),
     defineField({
       name: "bio",
-      type: "internationalizedArrayBlockContent",
+      type: "blockContent",
     }),
   ],
   preview: {

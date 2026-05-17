@@ -21,11 +21,11 @@ export const footerType = defineType({
     }),
     defineField({
       name: "address",
-      type: "internationalizedArrayString",
+      type: "text",
     }),
     defineField({
       name: "copyright",
-      type: "internationalizedArrayString",
+      type: "string",
     }),
   ],
 });

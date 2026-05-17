@@ -7,12 +7,12 @@ export const siteSettingsType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "internationalizedArrayString",
+      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",
-      type: "internationalizedArrayText",
+      type: "text",
     }),
     defineField({
       name: "ogImage",

@@ -3,15 +3,12 @@ import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
 import { loadQuery } from "@/sanity/lib/load-query";
 import { POSTS_INDEX_QUERY } from "@/sanity/lib/queries";
-import { DEFAULT_LOCALE } from "@/sanity/lib/locale";
 
-const locale = DEFAULT_LOCALE;
 const { data: posts } = await loadQuery<any[]>({
   query: POSTS_INDEX_QUERY,
-  params: { locale },
 });
 ---
-<Layout locale={locale} title="Posts" path="/posts">
+<Layout title="Posts" path="/posts">
   <section class="container mx-auto px-4 py-10">
     <h1 class="text-3xl font-bold mb-8">Posts</h1>
     {posts?.length ? (
@@ -22,7 +19,6 @@ const { data: posts } = await loadQuery<any[]>({
             slug={post.slug}
             publishedAt={post.publishedAt}
             mainImage={post.mainImage}
-            locale={locale}
           />
         ))}
       </div>
