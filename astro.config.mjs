@@ -21,7 +21,6 @@ export default defineConfig({
       projectId: PUBLIC_SANITY_PROJECT_ID,
       dataset: PUBLIC_SANITY_DATASET,
       useCdn: false,
-      apiVersion: '2025-09-21',
     }),
     react(),
   ],
