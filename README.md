@@ -1,6 +1,6 @@
 # Astro × Sanity Starter
 
-A template for static websites using **Astro 6**, **Sanity 5**, and
+A template for static websites using **Astro 7**, **Sanity 6**, and
 **TypeScript**. No i18n — single-language, flat routing.
 
 This README is written to be useful both for:
@@ -16,14 +16,17 @@ git pull
 npm install
 cp .env.example .env   # only if .env is missing
 npm run sanity:codegen
-npm run dev
 ```
 
-In a second terminal:
+Then start both dev servers at once:
 
 ```bash
-npm run sanity:dev
+npm run devs
 ```
+
+This runs Astro (`npm run dev`) and Sanity Studio (`npm run sanity:dev`)
+concurrently, with both processes' output in one terminal. Prefer separate
+terminals? Run `npm run dev` and `npm run sanity:dev` individually instead.
 
 Then confirm:
 1. Site opens at <http://localhost:4321>
@@ -165,17 +168,15 @@ You now have two terminals running:
 
 ## Daily development workflow
 
-When actively building, use two terminals:
+When actively building, run both dev servers at once:
 
-**Terminal 1** — Astro site:
 ```bash
-npm run dev
+npm run devs
 ```
 
-**Terminal 2** — Sanity Studio:
-```bash
-npm run sanity:dev
-```
+This runs `npm run dev` (Astro) and `npm run sanity:dev` (Studio) concurrently
+in one terminal. If you'd rather keep their logs separate, run `npm run dev`
+and `npm run sanity:dev` in two terminals instead.
 
 Other common tasks:
 
@@ -209,6 +210,7 @@ Other common tasks:
 |---|---|
 | `npm run dev` | Run Astro dev server at `localhost:4321` |
 | `npm run sanity:dev` | Run Sanity Studio at `localhost:3333` |
+| `npm run devs` | Run Astro + Studio concurrently in one terminal |
 | `npm run build` | Build static production output to `dist/` |
 | `npm run preview` | Preview production build locally |
 | `npm run sanity:deploy` | Deploy Studio to the Sanity-hosted URL |
