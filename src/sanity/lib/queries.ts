@@ -135,3 +135,16 @@ export const LANDING_QUERY = defineQuery(`
     ctaBtnText
   }
 `);
+
+// ───── Theme ───────────────────────────────────────────────────────────────
+// `light` / `dark` are `themePalette` objects holding one @sanity/color-input
+// value per design token; `src/lib/theme.ts` turns them into CSS variables.
+
+export const THEME_QUERY = defineQuery(`
+  *[_type == "theme"][0]{
+    radius,
+    light,
+    dark
+  }
+`);
+

@@ -15,6 +15,59 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type ThemePalette = {
+  _type: "themePalette";
+  background?: string;
+  foreground?: string;
+  card?: string;
+  cardForeground?: string;
+  popover?: string;
+  popoverForeground?: string;
+  primary?: string;
+  primaryForeground?: string;
+  secondary?: string;
+  secondaryForeground?: string;
+  accent?: string;
+  accentForeground?: string;
+  muted?: string;
+  mutedForeground?: string;
+  border?: string;
+  input?: string;
+  ring?: string;
+  destructive?: string;
+  destructiveForeground?: string;
+  chart1?: string;
+  chart2?: string;
+  chart3?: string;
+  chart4?: string;
+  chart5?: string;
+  sidebar?: string;
+  sidebarForeground?: string;
+  sidebarPrimary?: string;
+  sidebarPrimaryForeground?: string;
+  sidebarAccent?: string;
+  sidebarAccentForeground?: string;
+  sidebarBorder?: string;
+  sidebarRing?: string;
+  muted2?: string;
+  muted2Foreground?: string;
+  gradient1?: string;
+  gradient2?: string;
+  gradient3?: string;
+};
+
+export type Theme = {
+  _id: string;
+  _type: "theme";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  light?: ThemePalette;
+  dark?: ThemePalette;
+  radius?: "0" | "0.25rem" | "0.5rem" | "0.75rem" | "1rem";
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
@@ -359,6 +412,8 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | ThemePalette
+  | Theme
   | SanityImageAssetReference
   | NavigationReference
   | SiteSettings
@@ -583,9 +638,17 @@ export type LANDING_QUERY_RESULT = {
   ctaBtnText: string | null;
 } | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: THEME_QUERY
+// Query: *[_type == "theme"][0]{    radius,    light,    dark  }
+export type THEME_QUERY_RESULT = {
+  radius: "0.25rem" | "0.5rem" | "0.75rem" | "0" | "1rem" | null;
+  light: ThemePalette | null;
+  dark: ThemePalette | null;
+} | null;
+
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+declare global {
   interface SanityQueries {
     '\n  *[_type == "post" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': POST_SLUGS_QUERY_RESULT;
     '\n  *[_type == "post" && slug.current == $slug][0]{\n    title,\n    body,\n    publishedAt,\n    mainImage{ asset, alt },\n    "author": author->{\n      name,\n      "slug": slug.current,\n      image\n    },\n    "categories": categories[]->{\n      title,\n      "slug": slug.current\n    }\n  }\n': POST_BY_SLUG_QUERY_RESULT;
@@ -599,5 +662,10 @@ declare module "@sanity/client" {
     '\n  *[_type == "siteSettings"][0]{\n    title,\n    description,\n    siteUrl,\n    ogImage,\n    "primaryNav": primaryNav->{\n      items[]{\n        label,\n        href,\n        "internalRef": internalRef->{ _type, "slug": slug.current }\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "footer"][0]{\n    instagramURL,\n    cellNumber,\n    email,\n    address,\n    copyright\n  }\n': FOOTER_QUERY_RESULT;
     '\n  *[_type == "landing"][0]{\n    title,\n    landingImage{ asset, alt },\n    image{ asset, alt },\n    ctaText,\n    ctaBtnText\n  }\n': LANDING_QUERY_RESULT;
+    '\n  *[_type == "theme"][0]{\n    radius,\n    light,\n    dark\n  }\n': THEME_QUERY_RESULT;
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module "@sanity/client" {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

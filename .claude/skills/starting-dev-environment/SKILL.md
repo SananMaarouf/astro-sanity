@@ -52,6 +52,10 @@ confusion when scripting this project's startup.
 | Types stale or `sanity:codegen` output doesn't match schema | Schema or GROQ queries changed but codegen not rerun | `npm run sanity:codegen` (runs `sanity:extract` + `sanity:typegen`) |
 | Build/dev succeeds but pages render empty | Required singleton docs (`Site Settings`, `Navigation`, `Footer`, `Landing`) not published in Studio | Create/publish them in Studio at `localhost:3333` |
 | `.env` has literal `"project-id"` / `"dataset"` values | Copied from `.env.example` but never filled in | Fill in the real project ID/dataset from the Sanity project |
+| Site colors don't change after editing **Theme** in the Studio | Output is static and the palette is read at build time | Publish the `theme` document (drafts are invisible to the site), then reload in `astro dev` or run `npm run build` |
+| CMS palette is ignored even though the `theme` doc is published | The generated `html:root` / `html.dark` selectors in `src/lib/theme.ts` are what out-specify the `:root` / `.dark` defaults in `global.css` | Keep those selectors — plain `:root` loses to the stylesheet Astro hoists to the end of `<head>` in builds (Vite injects it at runtime in dev) |
+| Studio shows no **Theme** entry, or a color field renders broken | Palette fields are `string` + a custom swatch input (`src/sanity/components/`) | Restart `npm run sanity:dev`; do not reintroduce `@sanity/color-input` — its 18 attributes per color blow past Sanity's 1000-attribute-per-document limit |
+| Theme fields show `Expected type "String", got "Object"` after a palette schema change | A saved draft still holds the old value shape | `sanity documents get drafts.theme`, migrate it, write it back — GROQ's default perspective hides drafts, so a plain `*[_id=="theme"]` query won't reveal them |
 
 ## Shutting down
 

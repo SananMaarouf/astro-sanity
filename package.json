@@ -18,7 +18,7 @@
     "sanity:dataset-export": "sanity dataset export",
     "sanity:dataset-import": "sanity dataset import",
     "sanity:cors-add": "sanity cors add",
-    "sanity:extract": "sanity schema extract --path=schema.json",
+    "sanity:extract": "sanity schema extract --path=schema.json --force",
     "sanity:typegen": "sanity typegen generate",
     "sanity:codegen": "npm run sanity:extract && npm run sanity:typegen"
   },
